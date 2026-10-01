@@ -1,12 +1,29 @@
 /**
  * Assets
  */
-import { SparkleIcon } from 'lucide-react';
+import { SparkleIcon, MailIcon } from 'lucide-react';
+/**
+ * Node Modules
+ */
+import { motion } from 'motion/react';
+/**
+ * Components
+ */
+import { Button } from '@/components/UI/Button';
+import {ContactDialog} from '@/components/ContactDialog'
+
+import { useState } from 'react';
 
 export const Header = () => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return (
-    <header className=''>
-      <div className='space-y-2'>
+    <header className='flex flex-col gap-6 md:flex-row md:items-end md:justify-between'>
+      <motion.div
+        className='space-y-2'
+        initial={{ x: -20, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+      >
         <div
           className='flex items-center gap-2 
             text-primary font-semibold tracking-tight'
@@ -22,7 +39,22 @@ export const Header = () => {
           design. Focused on scalable React ecosystems and robust cloud
           architectures.
         </p>
-      </div>
+      </motion.div>
+
+      <motion.div
+        className='flex gap-4'
+        initial={{ x: 20, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+      >
+        <Button 
+        onClick={() => setDialogOpen(true)} variant='default' size='default'>
+          <MailIcon size={20} />
+          Let's Connect
+        </Button>
+
+        <ContactDialog open={dialogOpen} onOpen={() => setDialogOpen(false)} />
+       
+      </motion.div>
     </header>
   );
 };
